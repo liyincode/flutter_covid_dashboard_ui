@@ -3,7 +3,11 @@ import 'package:bubble_tab_indicator/bubble_tab_indicator.dart';
 
 import 'package:flutter_covid_dashboard_ui/config/palette.dart';
 import 'package:flutter_covid_dashboard_ui/config/styles.dart';
+import 'package:flutter_covid_dashboard_ui/data/data.dart';
+import 'package:flutter_covid_dashboard_ui/widgets/covid_bar_chart.dart';
 import 'package:flutter_covid_dashboard_ui/widgets/custom_app_bar.dart';
+import 'package:flutter_covid_dashboard_ui/widgets/stats_grid.dart';
+import 'package:flutter_covid_dashboard_ui/widgets/covid_bar_chart.dart';
 
 class StatsScreen extends StatefulWidget {
   @override
@@ -23,7 +27,19 @@ class _StatsScreenState extends State<StatsScreen> {
         slivers: <Widget>[
           _buildHeader(),
           _buildRegionTabBar(),
-          _buildStatsTabBar()
+          _buildStatsTabBar(),
+          SliverPadding(
+            padding: EdgeInsets.symmetric(horizontal: 10.0),
+            sliver: SliverToBoxAdapter(
+              child: StatsGrid(),
+            ),
+          ),
+          SliverPadding(
+            padding: EdgeInsets.only(top: 20.0),
+            sliver: SliverToBoxAdapter(
+              child: CovidBarChart(covidCase: covidUSADailyNewCases,),
+            ),
+          )
         ],
       ),
     );
@@ -53,7 +69,9 @@ class _StatsScreenState extends State<StatsScreen> {
           margin: EdgeInsets.symmetric(horizontal: 20.0),
           height: 50.0,
           decoration: BoxDecoration(
-              color: Colors.white24, borderRadius: BorderRadius.circular(25.0)),
+            color: Colors.white24,
+            borderRadius: BorderRadius.circular(25.0),
+          ),
           child: TabBar(
             indicator: BubbleTabIndicator(
               tabBarIndicatorSize: TabBarIndicatorSize.tab,
